@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Storage Assignment</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 50px;
+            background-color: white;
+            color: black;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .dark {
+            background-color: black;
+            color: white;
+        }
+
+        .light {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Personal Dashboard</h1>
+
+    <h3>Theme Settings</h3>
+
+    <button onclick="setDarkTheme()">Set Dark Theme</button>
+
+    <button onclick="setLightTheme()">Set Light Theme</button>
+
+    <h3>Session Management</h3>
+
+    <button onclick="generateToken()">Generate Session Token</button>
+
+    <p id="tokenDisplay"></p>
+
+    <script>
+
+        // Save Theme
+        function saveTheme(theme) {
+            localStorage.setItem("appTheme", theme);
+        }
+
+        // Load Theme
+        function loadTheme() {
+            return localStorage.getItem("appTheme");
+        }
+
+        // Store Session Token
+        function storeSessionToken(token) {
+            sessionStorage.setItem("sessionToken", token);
+        }
+
+        // Clear Session Token
+        function clearSessionToken() {
+            sessionStorage.removeItem("sessionToken");
+        }
+
+        // Set Dark Theme
+        function setDarkTheme() {
+            saveTheme("dark");
+            document.body.className = "dark";
+        }
+
+        // Set Light Theme
+        function setLightTheme() {
+            saveTheme("light");
+            document.body.className = "light";
+        }
+
+        // Generate Session Token
+        function generateToken() {
+            let token = Math.random().toString(36).substring(2, 15);
+
+            storeSessionToken(token);
+
+            document.getElementById("tokenDisplay").innerText =
+                "Session Token: " + token;
+        }
+
+        // Page Load
+        window.onload = function() {
+
+            let theme = loadTheme();
+
+            if (theme === "dark") {
+                document.body.className = "dark";
+            }
+            else if (theme === "light") {
+                document.body.className = "light";
+            }
+
+            let token = sessionStorage.getItem("sessionToken");
+
+            if (token !== null) {
+                document.getElementById("tokenDisplay").innerText =
+                    "Session Token: " + token;
+            }
+
+        };
+
+    </script>
+
+    
+
+</body>
+</html>
